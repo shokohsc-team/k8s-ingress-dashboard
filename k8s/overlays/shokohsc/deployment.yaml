@@ -20,6 +20,8 @@ spec:
               value: "true"
             - name: SENTRY_DSN
               value: https://2f15ffed2e254ced911e78de9312afe0\@glitchtip.shokohsc.home/1
+            - name: YOUTUBEVIDEOIDS
+              value: 'eEpEeyqGlxA,9k4R3BhUi68,cQLa6lbZvzw,J2UyOTS3UCE,WA6irSA3SKc,Y1qQZbTF8iQ,rw7bxTqkYYs,BuIVgtAXW_8'
           resources:
             requests:
               cpu: 10m

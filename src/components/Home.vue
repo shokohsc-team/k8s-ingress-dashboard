@@ -2,8 +2,8 @@
   <div class="video" :data-vbg="videoBackground()" data-vbg-poster="" data-vbg-inline-styles="true" data-vbg-mobile="true"></div>
   <div class="content">
     <ul class="sites">
-    <li v-for="(site, index) in sites" :key="index">
-      <a target="_blank" :title="site.name" :href="site.url">
+    <li v-for="(site, index) in sites">
+      <a target="_blank" :title="site.key" :href="site.url">
         <span :class="iconClass(site)"></span>
         <span class="name">{{ site.name }}</span>
       </a>
@@ -20,7 +20,7 @@ import io from 'socket.io-client';
 export default {
   data() {
     return {
-      sites: []
+      sites: {}
     }
   },
   created() {
@@ -28,7 +28,11 @@ export default {
     socket.on("connect", () => {
     });
     socket.on('sites', (data) => {
-      this.sites = data.sites
+      const sites = []
+      for (const [key, value] of Object.entries(data.sites)) {
+        sites.push({key: key, ...value})
+      }
+      this.sites = sites.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
     });
   },
   mounted() {
