@@ -8,13 +8,13 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@mdi/font": "^7.1.96",
+    "@vitejs/plugin-vue": "^3.0.0",
     "socket.io-client": "^4.5.1",
+    "vite": "^3.0.0",
+    "vite-plugin-fonts": "^0.7.0",
     "vue": "^3.2.37",
     "youtube-background": "^1.0.14"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.0",
-    "vite": "^3.0.0"
   }
 }

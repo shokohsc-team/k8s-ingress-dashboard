@@ -1,13 +1,13 @@
 <template>
   <div class="video" :data-vbg="videoBackground()" data-vbg-poster="" data-vbg-inline-styles="true" data-vbg-mobile="true"></div>
-  <div class="content">
-    <ul class="sites">
-    <li v-for="(site, index) in sites">
-      <a target="_blank" :title="site.key" :href="site.url">
-        <span :class="iconClass(site)"></span>
-        <span class="name">{{ site.name }}</span>
-      </a>
-    </li>
+  <div class="container">
+    <ul>
+      <li v-for="(site, index) in sites">
+        <a target="_blank" :title="site.key" :href="site.url">
+          <span :class="iconClass(site)"></span>
+          <span class="name">{{ site.name }}</span>
+        </a>
+      </li>
     </ul>
   </div>
 </template>
@@ -50,22 +50,26 @@ export default {
 </script>
 
 <style>
-.sites {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  font-size: 14px;
-  user-select: none;
+.video {
+  height: 100%;
+  width: 100%;
+  z-index: -1 !important;
+  position: fixed !important;
+  overflow: hidden;
+  inset: 0px;
+  pointer-events: none;
+  background-image: #000 !important;
+  background-attachment: fixed !important;
 }
-.sites li {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  font-size: 14px;
-  user-select: none;
+.container ul {
+  padding: 30px 0;
+  max-width: 650px;
+  margin: 0 auto;
+}
+.container ul li {
   display: inline-block;
 }
-.sites li a {
+.container ul li a {
   color: inherit;
   text-decoration: none;
   display: inline-block;
@@ -73,15 +77,15 @@ export default {
   border-radius: 6px;
   text-shadow: 1px 1px 2px black;
 }
-.sites li a:hover {
+.container ul li a:hover {
   background-color: rgba(255, 255, 255, 0.0823529412);
   transition: background-color 0.1s;
   text-shadow: 1px 1px 2px white;
 }
-.sites li a span.mdi {
+.container ul li a span.mdi {
   font-size: 30px;
 }
-.sites .icon {
+.container ul .icon {
   display: block;
   background-color: #fff;
   width: 80px;
@@ -96,60 +100,14 @@ export default {
   background-position: 50%;
   background-size: 20px;
 }
-.sites .icon img {
+.container ul .icon img {
   width: 100%;
   background: #fff;
 }
-.sites .name {
+.container ul .name {
   display: block;
   max-height: 3.3em;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6274509804);
   white-space: nowrap;
-}
-
-.fixed {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-}
-
-.hidden {
-  opacity: 0;
-}
-
-.enable {
-  display: block !important;
-}
-
-.background {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  transform: scale(1.07);
-  z-index: -2;
-}
-
-.content {
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  max-width: 650px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.video {
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-  position: fixed !important;
-  overflow: hidden;
-  inset: 0px;
-  pointer-events: none;
-  background-image: #000 !important;
 }
 </style>
