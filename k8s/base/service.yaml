@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-ingress-dashboard
+  name: dashboard
   labels:
-    app: k8s-ingress-dashboard
+    app: dashboard
 spec:
   type: ClusterIP
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: k8s-ingress-dashboard
+    app: dashboard

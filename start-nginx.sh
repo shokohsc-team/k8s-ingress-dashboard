@@ -6,6 +6,8 @@ JSON_STRING='window.configs = { \
   "API_GATEWAY_HOST":"'"${API_GATEWAY_HOST}"'", \
   "API_GATEWAY_PORT":"'"${API_GATEWAY_PORT}"'", \
   "YOUTUBE_VIDEO_ID":"'"${YOUTUBE_VIDEO_ID}"'", \
+  "USE_SENTRY":"'"${USE_SENTRY}"'", \
+  "SENTRY_DSN":"'"${SENTRY_DSN}"'" \
 }'
 
 if [[ $ENV == 'production' ]]; then

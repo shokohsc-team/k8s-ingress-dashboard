@@ -21,7 +21,7 @@ module.exports = {
   watch: false,
   https: false,
   proxy: {
-    target: "k8s-ingress-dashboard.dev-k8s-ingress-dashboard:80",
+    target: "dashboard.dev-dashboard:80",
     ws: true
   },
   cors: true,

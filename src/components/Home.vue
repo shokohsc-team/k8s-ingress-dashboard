@@ -61,11 +61,6 @@ export default {
   background-image: #000 !important;
   background-attachment: fixed !important;
 }
-.container ul {
-  padding: 30px 0;
-  max-width: 650px;
-  margin: 0 auto;
-}
 .container ul li {
   display: inline-block;
 }

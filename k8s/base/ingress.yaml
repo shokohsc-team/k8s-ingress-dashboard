@@ -2,16 +2,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: k8s-ingress-dashboard
+  name: dashboard
 spec:
   rules:
-  - host: k8s-ingress-dashboard.cluster.local
+  - host: dashboard.cluster.local
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: k8s-ingress-dashboard
+            name: dashboard
             port:
               number: 80

@@ -2,12 +2,12 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: k8s-ingress-dashboard
+  name: dashboard
 spec:
   template:
     spec:
       containers:
-        - name: k8s-ingress-dashboard
+        - name: dashboard
           image: shokohsc/k8s-ingress-dashboard
           env:
             - name: ENV
