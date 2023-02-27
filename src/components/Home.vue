@@ -1,5 +1,4 @@
 <template>
-  <div class="video" :data-vbg="videoBackground()" data-vbg-poster="" data-vbg-inline-styles="true" data-vbg-mobile="true"></div>
   <div class="container">
     <ul>
       <li v-for="(site, index) in sites">
@@ -13,7 +12,6 @@
 </template>
 
 <script>
-import 'youtube-background';
 import getEnv from '../utils/env';
 import io from 'socket.io-client';
 
@@ -35,31 +33,20 @@ export default {
       this.sites = sites.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
     });
   },
-  mounted() {
-    new VideoBackgrounds('[data-vbg]')
-  },
   methods: {
     iconClass: function(site) {
       return `mdi mdi-${site.icon}`
-    },
-    videoBackground: function() {
-      return `https://www.youtube.com/watch?v=${getEnv('YOUTUBE_VIDEO_ID')}`
     }
   }
 }
 </script>
 
 <style>
-.video {
-  height: 100%;
-  width: 100%;
-  z-index: -1 !important;
-  position: fixed !important;
+section.section {
   overflow: hidden;
-  inset: 0px;
-  pointer-events: none;
-  background-image: #000 !important;
-  background-attachment: fixed !important;
+}
+.container {
+  z-index: 1;
 }
 .container ul li {
   display: inline-block;

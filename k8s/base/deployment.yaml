@@ -24,8 +24,6 @@ spec:
               value: "80"
             - name: USE_SENTRY
               value: "false"
-            - name: YOUTUBE_VIDEO_ID
-              value: eEpEeyqGlxA
           ports:
             - name: http
               containerPort: 80

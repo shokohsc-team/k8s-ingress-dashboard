@@ -18,7 +18,6 @@
     "socket.io-client": "^4.5.1",
     "vite": "^3.0.0",
     "vite-plugin-fonts": "^0.7.0",
-    "vue": "^3.2.37",
-    "youtube-background": "^1.0.14"
+    "vue": "^3.2.37"
   }
 }
