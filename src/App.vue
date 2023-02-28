@@ -1,7 +1,5 @@
 <template>
-  <div class="wave" />
-  <div class="wave" />
-  <div class="wave" />
+  <div class="firefly" v-for="i in firefliesCount" :data-key="i" :key="i" />
   <Home />
 </template>
 
@@ -12,97 +10,104 @@ import 'virtual:fonts.css'
 export default {
   components: {
     Home
+  },
+  computed: {
+    firefliesCount: () => Math.floor(Math.random() * (50 - 15 + 1) + 15)
   }
 }
 </script>
 
-<style>
-* {
-  box-sizing: border-box;
-}
-body::-webkit-scrollbar {
-  display: none;
-}
-html {
-  background-color: #0a0a0a;
-  height: 100%;
-}
+<style lang="sass">
+$quantity: 50
+@use "sass:math"
 
-body {
-  z-index: -5;
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  font-family: "Code New Roman";
-  text-align: center;
-  color: #fff;
+*
+  box-sizing: border-box
 
-  margin: auto;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: auto;
-  background: linear-gradient(315deg, #8ecccc 3%, #212121 38%, #3a4042 68%, #50717b 98%);
-  animation: gradient 15s ease infinite;
-  background-size: 400% 400%;
-  background-attachment: fixed;
-}
+html
+  background-color: #0a0a0a
+  height: 100%
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
+body::-webkit-scrollbar
+  display: none
 
-.wave {
-  background: #0c0846 25%;
-  border-radius: 1000% 1000% 0 0;
-  position: fixed;
-  width: 200%;
-  height: 15em;
-  animation: wave 10s -3s linear infinite;
-  transform: translate3d(0, 0, 0);
-  opacity: 0.3;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-}
+body
+  z-index: -5
+  position: fixed
+  height: 100vh
+  width: 100vw
+  font-family: "Code New Roman"
+  text-align: center
+  color: #fff
+  overflow: auto
+  background: url('./assets/images/background.jpg')
+  background-size: cover
+  background-position: center
 
-.wave:nth-of-type(2) {
-  bottom: -1.25em;
-  animation: wave 18s linear reverse infinite;
-  opacity: 0.8;
-}
+.firefly
+  position: fixed
+  left: 50%
+  top: 50%
+  width: 0.4vw
+  height: 0.4vw
+  margin: -0.2vw 0 0 9.8vw
+  animation: ease 200s alternate infinite
+  pointer-events: none
 
-.wave:nth-of-type(3) {
-  bottom: -2.5em;
-  animation: wave 20s -1s reverse infinite;
-  opacity: 0.9;
-}
+  &::before,
+  &::after
+    content: ''
+    position: absolute
+    width: 100%
+    height: 100%
+    border-radius: 50%
+    transform-origin: -10vw
+  
+  &::before
+    background: black
+    opacity: 0.4
+    animation: drift ease alternate infinite
+  
+  &::after
+    background: white
+    opacity: 0
+    box-shadow: 0 0 0vw 0vw yellow
+    animation: drift ease alternate infinite, flash ease infinite
 
-@keyframes wave {
-  2% {
-    transform: translateX(1);
-  }
+  
+// Randomize Fireflies Motion
+@for $i from 1 through $quantity
+  
+  $steps: random(12) + 16
+  $rotationSpeed: random(10) + 8s
+  
+  .firefly:nth-child(#{$i})
+    animation-name: move#{$i}
 
-  25% {
-    transform: translateX(-25%);
-  }
+    &::before
+      animation-duration: #{$rotationSpeed}
 
-  50% {
-    transform: translateX(-50%);
-  }
+    &::after
+      animation-duration: #{$rotationSpeed}, random(6000) + 5000ms
+      animation-delay: 0ms, random(8000) + 500ms
 
-  75% {
-    transform: translateX(-25%);
-  }
+  @keyframes move#{$i}
+    @for $step from 0 through $steps
+      #{$step * (math.div(100, $steps))}%
+        transform: translateX(random(100) - 50vw) translateY(random(100) - 50vh) scale(math.div(random(75), 100) + .25)
 
-  100% {
-    transform: translateX(1);
-  }
-}
+@keyframes drift
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
+@keyframes flash
+  0%, 30%, 100%
+    opacity: 0
+    box-shadow: 0 0 0vw 0vw yellow
+  5%
+    opacity: 1
+    box-shadow: 0 0 2vw 0.4vw yellow
+
 </style>
