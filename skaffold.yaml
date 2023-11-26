@@ -75,6 +75,8 @@ profiles:
             cache:
               repo: shokohsc/k8s-ingress-dashboard
             dockerfile: Dockerfile
+            buildArgs:
+              POD_NAME: '{{.GIT_COMMIT}}'
       cluster:
         dockerConfig:
           secretName: kaniko-secret
