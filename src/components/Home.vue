@@ -1,6 +1,15 @@
 <template>
   <div class="container">
     <ul>
+      <li v-for="(temp, index) in temps">
+        <a target="_blank" :title="temp.key" :href="temp.url">
+          <span :class="iconClass(temp)"></span>
+          <span class="name">{{ temp.name }}</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul>
       <li v-for="(site, index) in sites">
         <a target="_blank" :title="site.key" :href="site.url">
           <span :class="iconClass(site)"></span>
@@ -18,7 +27,8 @@ import io from 'socket.io-client';
 export default {
   data() {
     return {
-      sites: {}
+      sites: {},
+      temps: {}
     }
   },
   created() {
@@ -27,10 +37,17 @@ export default {
     });
     socket.on('sites', (data) => {
       const sites = []
+      const temps = []
       for (const [key, value] of Object.entries(data.sites)) {
-        sites.push({key: key, ...value})
+        if (value.name.startsWith('browser-') || value.name.startsWith('dev-') || value.name.startsWith('preview-')) {
+        // if (value.icon === 'wrench') {
+          temps.push({key: key, ...value})
+        } else {
+          sites.push({key: key, ...value})
+        }
       }
       this.sites = sites.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
+      this.temps = temps.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
     });
   },
   methods: {
