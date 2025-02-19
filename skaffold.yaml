@@ -7,11 +7,9 @@ build:
     - image: shokohsc/k8s-ingress-dashboard
       context: .
       sync:
-        manual:
-          - src: src/**/*.js
-            dest: .
-          - src: src/**/*.vue
-            dest: .
+        infer:
+          - src/**/*.js
+          - src/**/*.vue
       docker:
         dockerfile: Dockerfile.dev
 manifests:
@@ -28,21 +26,17 @@ profiles:
       artifacts:
         - image: shokohsc/k8s-ingress-dashboard
           sync:
-            manual:
-              - src: src/**/*.js
-                dest: .
-              - src: src/**/*.vue
-                dest: .
+            infer:
+              - src/**/*.js
+              - src/**/*.vue
   - name: shokohsc
     build:
       artifacts:
         - image: shokohsc/k8s-ingress-dashboard
           sync:
-            manual:
-              - src: src/**/*.js
-                dest: .
-              - src: src/**/*.vue
-                dest: .
+            infer:
+              - src/**/*.js
+              - src/**/*.vue
           kaniko:
             useNewRun: true
             cache:

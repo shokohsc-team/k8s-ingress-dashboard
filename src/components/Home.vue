@@ -10,6 +10,12 @@
           <a :href="grafanaLink(temp.key)" target="_blank">
             grafana
           </a>
+          <a :href="headlampLink(temp.key)" target="_blank">
+            headlamp
+          </a>
+          <a :href="dashboardLink(temp.key)" target="_blank">
+            k8s
+          </a>
         </span>
       </li>
     </ul>
@@ -23,6 +29,12 @@
         <span class="tooltip">
           <a :href="grafanaLink(site.key)" target="_blank">
             grafana
+          </a>
+          <a :href="headlampLink(site.key)" target="_blank">
+            headlamp
+          </a>
+          <a :href="dashboardLink(site.key)" target="_blank">
+            k8s
           </a>
         </span>
       </li>
@@ -64,8 +76,14 @@ export default {
     iconClass: function(site) {
       return `mdi mdi-${site.icon}`
     },
+    headlampLink: function(key) {
+      return `https://headlamp.shokohsc.home/c/main/pods?namespace=${key.split('/')[0]}`
+    },
     grafanaLink: function(key) {
       return `https://grafana.shokohsc.home/d/Ie9afVlMz/global-cluster-view?orgId=1&from=now-1h&to=now&timezone=browser&var-node=$__all&var-namespace=${key.split('/')[0]}&var-pod=$__all&var-container=${key.split('/')[1]}&refresh=10s`
+    },
+    dashboardLink: function(key) {
+      return `https://kubernetes-dashboard.shokohsc.home/#/pod?namespace=${key.split('/')[0]}`
     }
   }
 }

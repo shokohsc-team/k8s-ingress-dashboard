@@ -28,6 +28,9 @@ html
   background-color: #0a0a0a
   height: 100%
 
+section.section
+  overflow: visible
+
 body::-webkit-scrollbar
   display: none
 
