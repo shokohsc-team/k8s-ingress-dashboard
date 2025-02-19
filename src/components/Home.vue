@@ -1,20 +1,30 @@
 <template>
   <div class="container">
     <ul>
-      <li v-for="(temp, index) in temps">
+      <li v-for="(temp, index) in temps" class="has-tooltip-top">
         <a target="_blank" :title="temp.key" :href="temp.url">
           <span :class="iconClass(temp)"></span>
           <span class="name">{{ temp.name }}</span>
         </a>
+        <span class="tooltip">
+          <a :href="grafanaLink(temp.key)" target="_blank">
+            grafana
+          </a>
+        </span>
       </li>
     </ul>
 
     <ul>
-      <li v-for="(site, index) in sites">
+      <li v-for="(site, index) in sites" class="has-tooltip-top">
         <a target="_blank" :title="site.key" :href="site.url">
           <span :class="iconClass(site)"></span>
           <span class="name">{{ site.name }}</span>
         </a>
+        <span class="tooltip">
+          <a :href="grafanaLink(site.key)" target="_blank">
+            grafana
+          </a>
+        </span>
       </li>
     </ul>
   </div>
@@ -53,6 +63,9 @@ export default {
   methods: {
     iconClass: function(site) {
       return `mdi mdi-${site.icon}`
+    },
+    grafanaLink: function(key) {
+      return `https://grafana.shokohsc.home/d/Ie9afVlMz/global-cluster-view?orgId=1&from=now-1h&to=now&timezone=browser&var-node=$__all&var-namespace=${key.split('/')[0]}&var-pod=$__all&var-container=${key.split('/')[1]}&refresh=10s`
     }
   }
 }
@@ -108,5 +121,29 @@ section.section {
   max-height: 3.3em;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6274509804);
   white-space: nowrap;
+}
+
+.has-tooltip-top {
+  position: relative;
+}
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  /* padding: 10px; */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 10;
+}
+.has-tooltip-top:hover .tooltip {
+  visibility: visible;
+  opacity: .8;
+  transition-delay: 1s;
 }
 </style>
