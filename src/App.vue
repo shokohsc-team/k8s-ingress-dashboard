@@ -29,7 +29,12 @@ html
   height: 100%
 
 section.section
-  overflow: visible
+  overflow: hidden
+  display: flex
+  flex-direction: column
+  width: 100%
+  height: 100vh
+  align-items: center
 
 body::-webkit-scrollbar
   display: none
@@ -81,8 +86,8 @@ body
 // Randomize Fireflies Motion
 @for $i from 1 through $quantity
   
-  $steps: random(12) + 16
-  $rotationSpeed: random(10) + 8s
+  $steps: math.random(12) + 16
+  $rotationSpeed: math.random(10) + 8s
   
   .firefly:nth-child(#{$i})
     animation-name: move#{$i}
@@ -91,13 +96,13 @@ body
       animation-duration: #{$rotationSpeed}
 
     &::after
-      animation-duration: #{$rotationSpeed}, random(6000) + 5000ms
-      animation-delay: 0ms, random(8000) + 500ms
+      animation-duration: #{$rotationSpeed}, math.random(6000) + 5000ms
+      animation-delay: 0ms, math.random(8000) + 500ms
 
   @keyframes move#{$i}
     @for $step from 0 through $steps
       #{$step * (math.div(100, $steps))}%
-        transform: translateX(random(100) - 50vw) translateY(random(100) - 50vh) scale(math.div(random(75), 100) + .25)
+        transform: translateX(math.random(100) - 50vw) translateY(math.random(100) - 50vh) scale(math.div(math.random(75), 100) + .25)
 
 @keyframes drift
   0%

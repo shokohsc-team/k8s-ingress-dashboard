@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container-top" v-if="temps.length > 0">
     <ul>
       <li v-for="(temp, index) in temps" class="has-tooltip-top">
         <a target="_blank" :title="temp.key" :href="temp.url">
@@ -19,7 +19,9 @@
         </span>
       </li>
     </ul>
+  </div>
 
+  <div class="container container-bottom">
     <ul>
       <li v-for="(site, index) in sites" class="has-tooltip-top">
         <a target="_blank" :title="site.key" :href="site.url">
@@ -50,27 +52,19 @@ export default {
   data() {
     return {
       sites: {},
-      temps: {}
+      temps: {},
+      interval: {},
+      ws: undefined
     }
   },
-  created() {
-    const socket = io(`ws://${getEnv('API_GATEWAY_HOST')}:${getEnv('API_GATEWAY_PORT')}`)
-    socket.on("connect", () => {
-    });
-    socket.on('sites', (data) => {
-      const sites = []
-      const temps = []
-      for (const [key, value] of Object.entries(data.sites)) {
-        if (value.name.startsWith('browser-') || value.name.startsWith('dev-') || value.name.startsWith('preview-')) {
-        // if (value.icon === 'wrench') {
-          temps.push({key: key, ...value})
-        } else {
-          sites.push({key: key, ...value})
-        }
-      }
-      this.sites = sites.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
-      this.temps = temps.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
-    });
+  mounted() {
+    this.interval = setInterval(this.connect, 500)
+  },
+  beforeUnmount() {
+    if (this.ws)
+      this.ws.disconnect()
+    if (this.interval)
+      clearInterval(this.interval)
   },
   methods: {
     iconClass: function(site) {
@@ -84,17 +78,48 @@ export default {
     },
     dashboardLink: function(key) {
       return `https://kubernetes-dashboard.shokohsc.home/#/pod?namespace=${key.split('/')[0]}`
+    },
+    connect: function() {
+      if (!this.ws)
+        this.ws = io(`ws://${getEnv('API_GATEWAY_HOST')}:${getEnv('API_GATEWAY_PORT')}`)
+      this.ws.on("connect", () => {
+        console.log(`Connected on ${getEnv('API_GATEWAY_HOST')}:${getEnv('API_GATEWAY_PORT')}`)
+      })
+      this.ws.on("disconnect", () => {
+        console.log(`Disconnected from ${getEnv('API_GATEWAY_HOST')}:${getEnv('API_GATEWAY_PORT')}`)
+      })
+      this.ws.on('sites', (data) => {
+        const sites = []
+        const temps = []
+        for (const [key, value] of Object.entries(data.sites)) {
+          if (value.name.startsWith('browser-') || value.name.startsWith('dev-') || value.name.startsWith('preview-')) {
+          // if (value.icon === 'wrench') {
+            temps.push({key: key, ...value})
+          } else {
+            sites.push({key: key, ...value})
+          }
+        }
+        this.sites = sites.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
+        this.temps = temps.sort((a, b) => { return a.key === b.key ? 0 : a.key > b.key ? 1 : -1 })
+      })
     }
   }
 }
 </script>
 
 <style>
-section.section {
-  overflow: hidden;
-}
 .container {
   z-index: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container-top {
+  order: 1;
+}
+.container-bottom {
+  order: 2;
 }
 .container ul li {
   display: inline-block;
