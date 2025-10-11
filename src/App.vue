@@ -29,7 +29,7 @@ html
   height: 100%
 
 section.section
-  overflow: hidden
+  // overflow: hidden
   display: flex
   flex-direction: column
   width: 100%
