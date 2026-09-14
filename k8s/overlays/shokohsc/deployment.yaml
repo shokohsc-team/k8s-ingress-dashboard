@@ -5,25 +5,25 @@ metadata:
   name: dashboard
 spec:
   template:
+    metadata:
+      labels:
+        policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
     spec:
       containers:
         - name: dashboard
           image: shokohsc/k8s-ingress-dashboard
+          securityContext:
+            readOnlyRootFilesystem: false
           env:
             - name: ENV
               value: development
-            - name: API_GATEWAY_HOST
-              value: sidekick.shokohsc.home
-            - name: API_GATEWAY_PORT
-              value: "443"
-            # - name: USE_SENTRY
-            #   value: "true"
-            - name: SENTRY_DSN
-              value: https://2f15ffed2e254ced911e78de9312afe0\@glitchtip.shokohsc.home/1
           resources:
-            requests:
-              cpu: 10m
-              memory: 64M
             limits:
               cpu: 1000m
               memory: 2048M
+          volumeMounts:
+            - name: temp
+              mountPath: /app/node_modules/.vite/
+      volumes:
+        - name: temp
+          emptyDir: {}

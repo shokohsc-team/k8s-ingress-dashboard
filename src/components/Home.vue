@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import getEnv from '../utils/env';
 import io from 'socket.io-client';
 
 export default {
@@ -71,22 +70,22 @@ export default {
       return `mdi mdi-${site.icon}`
     },
     headlampLink: function(key) {
-      return `https://headlamp.shokohsc.home/c/main/pods?namespace=${key.split('/')[0]}`
+      return `https://headlamp.home.arpa/c/main/pods?namespace=${key.split('/')[0]}`
     },
     grafanaLink: function(key) {
-      return `https://grafana.shokohsc.home/d/Ie9afVlMz/global-cluster-view?orgId=1&from=now-1h&to=now&timezone=browser&var-node=$__all&var-namespace=${key.split('/')[0]}&var-pod=$__all&var-container=${key.split('/')[1]}&refresh=10s`
+      return `https://grafana.home.arpa/d/Ie9afVlMz/global-cluster-view?orgId=1&from=now-1h&to=now&timezone=browser&var-node=$__all&var-namespace=${key.split('/')[0]}&var-pod=$__all&var-container=${key.split('/')[1]}&refresh=10s`
     },
     dashboardLink: function(key) {
-      return `https://kubernetes-dashboard.shokohsc.home/#/pod?namespace=${key.split('/')[0]}`
+      return `https://kubernetes-dashboard.home.arpa/#/pod?namespace=${key.split('/')[0]}`
     },
     connect: function() {
       if (!this.ws)
-        this.ws = io(`ws://${getEnv('API_GATEWAY_HOST')}:${getEnv('API_GATEWAY_PORT')}`)
+        this.ws = io(`ws://sidekick.home.arpa:${window.location.port}`)
       this.ws.on("connect", () => {
-        console.log(`Connected on ${getEnv('API_GATEWAY_HOST')}:${getEnv('API_GATEWAY_PORT')}`)
+        console.log(`Connected on sidekick.home.arpa:${window.location.port}`)
       })
       this.ws.on("disconnect", () => {
-        console.log(`Disconnected from ${getEnv('API_GATEWAY_HOST')}:${getEnv('API_GATEWAY_PORT')}`)
+        console.log(`Disconnected from sidekick.home.arpa:${window.location.port}`)
       })
       this.ws.on('sites', (data) => {
         const sites = []

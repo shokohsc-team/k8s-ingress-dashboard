@@ -12,21 +12,30 @@ spec:
       labels:
         app: dashboard
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: dashboard
           image: shokohsc/k8s-ingress-dashboard
-          env:
-            - name: ENV
-              value: production
-            - name: API_GATEWAY_HOST
-              value: api.cluster.local
-            - name: API_GATEWAY_PORT
-              value: "80"
-            - name: USE_SENTRY
-              value: "false"
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8000
               protocol: TCP
           startupProbe:
             tcpSocket:

@@ -1,4 +1,4 @@
-apiVersion: skaffold/v4beta6
+apiVersion: skaffold/v4beta14
 kind: Config
 metadata:
   name: k8s-ingress-dashboard
@@ -38,15 +38,19 @@ profiles:
               - src/**/*.js
               - src/**/*.vue
           kaniko:
-            useNewRun: true
             cache:
               repo: shokohsc/k8s-ingress-dashboard
             dockerfile: Dockerfile.dev
+            useNewRun: true
       cluster:
         dockerConfig:
           secretName: kaniko-secret
         namespace: kaniko
         pullSecretName: kaniko-secret
+        labels:
+          policy.gatekeeper.sh/ignore-psp-pods-allowed-user-ranges: "true"
+          policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
+          policy.gatekeeper.sh/ignore-psp-allow-privilege-escalation-container: "true"
         resources:
           limits:
             cpu: "2"
@@ -65,19 +69,19 @@ profiles:
       artifacts:
         - image: shokohsc/k8s-ingress-dashboard
           kaniko:
-            useNewRun: true
             cache:
               repo: shokohsc/k8s-ingress-dashboard
             dockerfile: Dockerfile
-            buildArgs:
-              POD_NAME: '{{.GIT_COMMIT}}'
-              SENTRY_AUTH_TOKEN: db6ff5f7b002322a0b6800027fa823d5faa131dc2535e060375d902728ea8353
-              SENTRY_PROJECT: dashboard
+            useNewRun: true
       cluster:
         dockerConfig:
           secretName: kaniko-secret
         namespace: kaniko
         pullSecretName: kaniko-secret
+        labels:
+          policy.gatekeeper.sh/ignore-psp-pods-allowed-user-ranges: "true"
+          policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
+          policy.gatekeeper.sh/ignore-psp-allow-privilege-escalation-container: "true"
         resources:
           limits:
             cpu: "2"

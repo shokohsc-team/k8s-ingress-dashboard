@@ -26,7 +26,7 @@ module.exports = {
   },
   cors: true,
   port: 3000,
-  logPrefix: "Dashboard",
+  logPrefix: "dashboard",
   logLevel: "debug",
   logConnections: true,
   socket: {
