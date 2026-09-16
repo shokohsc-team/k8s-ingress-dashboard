@@ -22,17 +22,6 @@ spec:
       - kind: Secret
         group: ""
         name: preview-dashboard-cert
-  - name: api-preview
-    hostname: api.preview.dashboard.home.arpa
-    protocol: HTTPS
-    port: 443
-    tls:
-      mode: Terminate
-      certificateRefs:
-      - kind: Secret
-        group: ""
-        name: api-preview-dashboard-cert
-
   - name: browser-sync
     hostname: browser-sync.dashboard.home.arpa
     protocol: HTTPS

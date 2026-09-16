@@ -4,9 +4,9 @@ kind: HTTPRoute
 metadata:
   name: preview
   annotations:
-    dashboard.shokohsc.home/name: preview-dashboard
-    dashboard.shokohsc.home/url: https://preview.dashboard.shokohsc.home
-    dashboard.shokohsc.home/icon: wrench
+    dashboard.home.arpa/name: preview-dashboard
+    dashboard.home.arpa/url: https://preview.dashboard.home.arpa
+    dashboard.home.arpa/icon: wrench
 spec:
   hostnames:
   - preview.dashboard.home.arpa
@@ -34,74 +34,11 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: api-preview
-spec:
-  hostnames:
-  - api.preview.dashboard.home.arpa
-  parentRefs:
-  - name: browser-sync
-    kind: ListenerSet
-    group: gateway.networking.k8s.io
-    sectionName: api-preview
-  rules:
-  - backendRefs:
-    - name: browser-sync
-      port: 3000
-    matches:
-    - path:
-        type: PathPrefix
-        value: /
-    filters:
-    - cors:
-        allowOrigins:
-        - https://preview.dashboard.home.arpa
-        allowMethods:
-        - GET
-        - OPTIONS
-        allowHeaders:
-        - DNT
-        - X-CustomHeader
-        - Keep-Alive
-        - User-Agent
-        - X-Requested-With
-        - If-Modified-Since
-        - Cache-Control
-        - Content-Type
-        allowCredentials: false
-        maxAge: 3600
-      type: CORS
-  - backendRefs:
-    - name: browser-sync
-      port: 443
-    matches:
-    - path:
-        type: PathPrefix
-        value: /browser-sync/socket.io
-    filters:
-    - cors:
-        allowOrigins:
-        - https://preview.dashboard.home.arpa
-        allowMethods:
-        - GET
-        - POST
-        - OPTIONS
-        allowHeaders:
-        - DNT
-        - X-CustomHeader
-        - Keep-Alive
-        - User-Agent
-        - X-Requested-With
-        - If-Modified-Since
-        - Cache-Control
-        - Content-Type
-        allowCredentials: false
-        maxAge: 3600
-      type: CORS
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
   name: browser-sync
+  annotations:
+    dashboard.home.arpa/name: browser-sync-dashboard
+    dashboard.home.arpa/url: https://browser-sync.dashboard.home.arpa
+    dashboard.home.arpa/icon: wrench
 spec:
   hostnames:
   - browser-sync.dashboard.home.arpa

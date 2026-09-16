@@ -82,10 +82,10 @@ export default {
       if (!this.ws)
         this.ws = io(`ws://sidekick.home.arpa:${window.location.port}`)
       this.ws.on("connect", () => {
-        console.log(`Connected on sidekick.home.arpa:${window.location.port}`)
+        console.log(`Connected on sidekick.home.arpa`)
       })
       this.ws.on("disconnect", () => {
-        console.log(`Disconnected from sidekick.home.arpa:${window.location.port}`)
+        console.log(`Disconnected from sidekick.home.arpa`)
       })
       this.ws.on('sites', (data) => {
         const sites = []

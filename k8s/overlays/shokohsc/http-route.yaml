@@ -4,9 +4,9 @@ kind: HTTPRoute
 metadata:
   name: dashboard
   annotations:
-    dashboard.shokohsc.home/name: dev-dashboard
-    dashboard.shokohsc.home/url: https://dev.dashboard.shokohsc.home
-    dashboard.shokohsc.home/icon: wrench
+    dashboard.home.arpa/name: dev-dashboard
+    dashboard.home.arpa/url: https://dev.dashboard.home.arpa
+    dashboard.home.arpa/icon: wrench
 spec:
   hostnames:
   - dev.dashboard.home.arpa
