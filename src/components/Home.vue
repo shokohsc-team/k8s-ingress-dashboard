@@ -13,9 +13,6 @@
           <a :href="headlampLink(temp.key)" target="_blank">
             headlamp
           </a>
-          <a :href="dashboardLink(temp.key)" target="_blank">
-            k8s
-          </a>
         </span>
       </li>
     </ul>
@@ -34,9 +31,6 @@
           </a>
           <a :href="headlampLink(site.key)" target="_blank">
             headlamp
-          </a>
-          <a :href="dashboardLink(site.key)" target="_blank">
-            k8s
           </a>
         </span>
       </li>
@@ -75,12 +69,9 @@ export default {
     grafanaLink: function(key) {
       return `https://grafana.home.arpa/d/Ie9afVlMz/global-cluster-view?orgId=1&from=now-1h&to=now&timezone=browser&var-node=$__all&var-namespace=${key.split('/')[0]}&var-pod=$__all&var-container=${key.split('/')[1]}&refresh=10s`
     },
-    dashboardLink: function(key) {
-      return `https://kubernetes-dashboard.home.arpa/#/pod?namespace=${key.split('/')[0]}`
-    },
     connect: function() {
       if (!this.ws)
-        this.ws = io(`ws://sidekick.home.arpa:${window.location.port}`)
+        this.ws = io(`wss://sidekick.home.arpa:${window.location.port}`)
       this.ws.on("connect", () => {
         console.log(`Connected on sidekick.home.arpa`)
       })
